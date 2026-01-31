@@ -11,8 +11,8 @@
             /* Color Palette - Sophisticated Dark Mode */
             --bg-primary: #020617; /* Slate 950 */
             --bg-secondary: #0f172a; /* Slate 900 */
-            --bg-card: rgba(15, 23, 42, 0.6);
-            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
             
             --accent-primary: #38bdf8; /* Sky 400 */
             --accent-secondary: #818cf8; /* Indigo 400 */
@@ -36,8 +36,8 @@
             --font-body: 'Inter', system-ui, sans-serif;
             
             /* Effects */
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(12px);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-blur: blur(25px);
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
             --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
             --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
@@ -81,12 +81,60 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.05) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(129, 140, 248, 0.05) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(129, 140, 248, 0.15) 0px, transparent 50%);
             pointer-events: none;
             z-index: 0;
+        }
+
+        /* Background Blobs for Glassmorphism */
+        .glass-bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(60px);
+            opacity: 0.8;
+        }
+
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.6) 0%, rgba(56, 189, 248, 0) 70%);
+            border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+
+        .blob:nth-child(2) {
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.5) 0%, rgba(244, 114, 182, 0) 70%);
+            width: 400px;
+            height: 400px;
+            left: 50%;
+            top: 50%;
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+
+        .blob:nth-child(3) {
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.5) 0%, rgba(129, 140, 248, 0) 70%);
+            width: 600px;
+            height: 600px;
+            right: 0;
+            bottom: 0;
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%) rotate(0deg); }
+            to { transform: translate(20%, 20%) rotate(360deg); }
         }
 
         /* ===== CONTAINER ===== */
@@ -159,8 +207,9 @@
             height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             display: block;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
         }
 
         /* Name & Title */
@@ -208,8 +257,8 @@
             align-items: center;
             gap: 12px;
             padding: 1rem 2rem;
-            background: var(--text-primary);
-            color: var(--bg-primary);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
             font-family: var(--font-display);
             font-size: 1rem;
             font-weight: 700;
@@ -217,6 +266,8 @@
             border-radius: 12px;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
             transition: all var(--transition-normal);
             animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
         }
@@ -279,11 +330,14 @@
         .about-content {
             max-width: 840px;
             margin: 0 auto;
-            background: var(--bg-card);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
             padding: var(--spacing-xl);
             border-radius: 24px;
             border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
             backdrop-filter: var(--glass-blur);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all var(--transition-normal);
             position: relative;
             overflow: hidden;
@@ -319,6 +373,7 @@
         .highlight {
             color: var(--accent-primary);
             font-weight: 600;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
         }
 
         .anime-recommendations {
@@ -334,13 +389,14 @@
         }
 
         .anime-tag {
-            background: rgba(129, 140, 248, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--accent-secondary);
             padding: 6px 14px;
             border-radius: 100px;
             font-size: 0.9rem;
             font-weight: 500;
-            border: 1px solid rgba(129, 140, 248, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             transition: all var(--transition-fast);
         }
 
@@ -360,11 +416,14 @@
         }
 
         .interest-card {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
             padding: var(--spacing-xl);
             border-radius: 24px;
             border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
             backdrop-filter: var(--glass-blur);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all var(--transition-normal);
             display: flex;
             flex-direction: column;
@@ -381,13 +440,15 @@
         .interest-icon-box {
             width: 56px;
             height: 56px;
-            background: rgba(56, 189, 248, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
             color: var(--accent-primary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             transition: all var(--transition-normal);
         }
 
@@ -424,7 +485,7 @@
         .social-link {
             width: 64px;
             height: 64px;
-            background: var(--bg-card);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -434,6 +495,7 @@
             text-decoration: none;
             border: 1px solid var(--glass-border);
             backdrop-filter: var(--glass-blur);
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
             transition: all var(--transition-normal);
             position: relative;
         }
@@ -554,6 +616,12 @@
     </style>
 </head>
 <body>
+    <div class="glass-bg-blobs">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="container">
